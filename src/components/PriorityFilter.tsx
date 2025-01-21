@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FilterContainer, Dropdown } from './PriorityFilterStyles'; 
 
 interface PriorityFilterProps {
   onFilterChange: (priority: 'All' | 'Low' | 'Medium' | 'High') => void;
@@ -12,12 +13,15 @@ const PriorityFilter: React.FC<PriorityFilterProps> = ({ onFilterChange }) => {
   }, [filter, onFilterChange]);
 
   return (
-    <select value={filter} onChange={(e) => setFilter(e.target.value as any)}>
-      <option value="All">All</option>
-      <option value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
-    </select>
+    <FilterContainer>
+      <span>Filter by Priority:</span>
+      <Dropdown value={filter} onChange={(e) => setFilter(e.target.value as any)}>
+        <option value="All">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </Dropdown>
+    </FilterContainer>
   );
 };
 

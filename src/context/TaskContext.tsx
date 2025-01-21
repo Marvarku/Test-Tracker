@@ -44,12 +44,13 @@ function taskReducer(state: TaskState, action: any): TaskState {
       return state;
   }
 }
+interface TaskProviderProps {
+    children: React.ReactNode;
+  }
 
-
-const TaskProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, { tasks: [] });
 
-  // Load tasks from localStorage
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks) {
