@@ -39,7 +39,6 @@ describe('TaskItem Component', () => {
 
     const deleteButton = screen.getByText(/delete/i);
     fireEvent.click(deleteButton);
-
     expect(deleteTaskMock).toHaveBeenCalledWith('1');
   });
 });
