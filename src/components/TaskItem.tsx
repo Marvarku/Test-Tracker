@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTaskContext } from '../context/TaskContext';
-import { TaskItemContainer, TaskHeader, TaskTitle, PriorityBadge, TaskDescription, TaskActions, TaskActionButton } from './TaskItemStyles';
+import TaskForm from './TaskForm';
+import { TaskItemContainer, TaskActionButton } from './TaskItemStyles';
 
 interface TaskItemProps {
   task: { id: string; title: string; description: string; priority: 'Low' | 'Medium' | 'High' };
@@ -8,22 +9,28 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const { deleteTask } = useTaskContext();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleCloseForm = () => {
+    setIsEditing(false);
+  };
 
   return (
     <TaskItemContainer>
-      <TaskHeader>
-        <TaskTitle>{task.title}</TaskTitle>
-        <PriorityBadge priority={task.priority}>{task.priority}</PriorityBadge>
-      </TaskHeader>
-      <TaskDescription>{task.description}</TaskDescription>
-      <TaskActions>
-        <TaskActionButton color="primary" onClick={() => console.log('Edit task')}>
-          Edit
-        </TaskActionButton>
-        <TaskActionButton color="danger" onClick={() => deleteTask(task.id)}>
-          Delete
-        </TaskActionButton>
-      </TaskActions>
+      <h3>{task.title} ({task.priority})</h3>
+      <p>{task.description}</p>
+      <div>
+        <TaskActionButton color="primary" onClick={handleEditClick}>Edit</TaskActionButton>
+        <TaskActionButton color="danger" onClick={() => deleteTask(task.id)}>Delete</TaskActionButton>
+      </div>
+
+      {isEditing && (
+        <TaskForm existingTask={task} onClose={handleCloseForm} />
+      )}
     </TaskItemContainer>
   );
 };
