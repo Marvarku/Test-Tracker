@@ -22,4 +22,20 @@ export const Header = styled.header`
 
 export const Main = styled.main`
   margin-top: 20px;
+  button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin:10px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .addButton {
+    background-color: #cc8d04;
+  }
 `;

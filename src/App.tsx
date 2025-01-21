@@ -26,7 +26,7 @@ const App: React.FC = () => {
         </div>
         </Header>
         <Main>
-        <button onClick={handleOpenForm}>Add New Task</button>
+        <button className="addButton" onClick={handleOpenForm}>Add New Task</button>
         
         {isTaskFormOpen && (
           <TaskForm onClose={handleCloseForm} />
