@@ -22,6 +22,7 @@ interface TaskContextProps {
 const TaskContext = createContext<TaskContextProps | undefined>(undefined);
 
 const TASK_ACTIONS = {
+  SET_TASKS: 'SET_TASKS',
   ADD: 'ADD_TASK',
   EDIT: 'EDIT_TASK',
   DELETE: 'DELETE_TASK',
@@ -30,6 +31,8 @@ const TASK_ACTIONS = {
 // Reducer function
 function taskReducer(state: TaskState, action: any): TaskState {
   switch (action.type) {
+    case TASK_ACTIONS.SET_TASKS:
+      return { tasks: action.payload };
     case TASK_ACTIONS.ADD:
       return { tasks: [...state.tasks, { ...action.payload, id: `${Date.now()}` }] };
     case TASK_ACTIONS.EDIT:
@@ -44,17 +47,19 @@ function taskReducer(state: TaskState, action: any): TaskState {
       return state;
   }
 }
+
 interface TaskProviderProps {
-    children: React.ReactNode;
-  }
+  children: React.ReactNode;
+}
 
 const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, { tasks: [] });
 
+  // Load tasks from localStorage
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks) {
-      dispatch({ type: TASK_ACTIONS.ADD, payload: JSON.parse(savedTasks) });
+      dispatch({ type: TASK_ACTIONS.SET_TASKS, payload: JSON.parse(savedTasks) });
     }
   }, []);
 
