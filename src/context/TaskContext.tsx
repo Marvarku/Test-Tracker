@@ -27,7 +27,6 @@ const TASK_ACTIONS = {
   DELETE: 'DELETE_TASK',
 };
 
-// Reducer function
 function taskReducer(state: TaskState, action: any): TaskState {
   switch (action.type) {
     case TASK_ACTIONS.ADD:
