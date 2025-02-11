@@ -54,7 +54,7 @@ interface TaskProviderProps {
 const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(taskReducer, { tasks: [] });
 
-  // Load tasks from localStorage
+  // Load tasks from localStorage when the component mounts
   useEffect(() => {
     const savedTasks = localStorage.getItem('tasks');
     if (savedTasks) {
@@ -62,7 +62,7 @@ const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
     }
   }, []);
 
-  // Persist tasks to localStorage
+  // Persist tasks to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(state.tasks));
   }, [state.tasks]);
